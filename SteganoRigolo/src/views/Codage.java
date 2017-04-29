@@ -1,3 +1,4 @@
+//Classe pour l'interface du Codage
 package views;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,7 +37,9 @@ public class Codage extends JPanel {
 		
 	
 	
-		  
+	/**
+	 * fonction pour lier l'interface dans l'onglet Codage.
+	 */
 	public Codage(){
 		
 		
@@ -91,6 +94,9 @@ public class Codage extends JPanel {
 		
 	}
 	
+	/**
+	 * Permet de positionner les boutons de l'interface
+	 */
 	public void positioner(){
 		this.setBackground(Color.gray);
 		this.setLayout(new GridBagLayout());
@@ -113,6 +119,12 @@ public class Codage extends JPanel {
 	    this.add(PanLabel,gbc);
 	}
 	
+	/**
+	 * Fonction pour chercher le chemin absolu d'une image
+	 * 
+	 * @param Chemin de l'image
+	 * @param nom de l'image
+	 */	
 	public void sourceImage(String path,String name){
 		int i,j;
 		j=path.length()-name.length();
