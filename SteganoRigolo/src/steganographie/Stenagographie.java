@@ -1,3 +1,5 @@
+//Implémentation des fonctions de l'interface "ISteganographie"
+
 package steganographie;
 
 import java.awt.Color;
@@ -19,18 +21,18 @@ public class Stenagographie implements IStenagographie{
 		int width = img.getWidth();
 		int height = img.getHeight();
 		int mult = 1;
-		while(width * height < data.length + 10) // we need an image capable of holding the data
+		while(width * height < data.length + 10) //on agrandit l'image pour qu'elle puisse contenir les données
 		{
 			mult *= 2;
 			width = mult * img.getWidth();
 			height = mult * img.getHeight();
 			
-			if(width * height > 8192*8192)
+			if(width * height > 8192*8192)//On ne veux pas une image trop grande. (4K Max)
 				throw new ExceptionInInitializerError("file too large");
 		}
 		BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
-		byte[] dataLength = new byte[4]; // 4 bytes in an int
+		byte[] dataLength = new byte[4]; // 4 bytes est un int
         int dataLengthInt = data.length;
         for (int i = 3; i >= 0; i--)
         {
@@ -51,7 +53,7 @@ public class Stenagographie implements IStenagographie{
 				int blue = (inter.getBlue() >> BBIT) << BBIT;
 				int toRed = 0, toGreen = 0, toBlue = 0;
 				
-				if(lengthInput)
+				if(lengthInput)//Encodage de la taille des données (4 premiers bytes)
 				{
 					toRed = (dataLength[k]) >> (8 - RBIT);
 					toGreen = (((dataLength[k]&(1<<(GBIT + BBIT))-1))) >> BBIT;
@@ -63,7 +65,7 @@ public class Stenagographie implements IStenagographie{
 						lengthInput = false;
 					}
 				}
-				else
+				else//Encodage des données
 				{
 					if(k < data.length)
 					{
@@ -73,6 +75,7 @@ public class Stenagographie implements IStenagographie{
 						++k;
 					}
 				}
+				//On transforme les int en positif si jamais le premier bit et à 1.
 				if(toRed < 0)
 					toRed = (int)Math.pow(2,  (RBIT-1)) + (int)(Math.pow(2,  (RBIT-1)) + toRed); 
 				if(toBlue < 0)
@@ -106,7 +109,7 @@ public class Stenagographie implements IStenagographie{
 				int blueBits = (((inter.getBlue()&(1<<BBIT)-1)));
 				byte dataByte = (byte)((redBits << (GBIT + BBIT)) + (greenBits << BBIT) + blueBits);
 				
-				if(lengthOutput)
+				if(lengthOutput)//Décodage de la taille des données encodées (4 premiers bytes)
 				{
 					dataLength <<= 8;
 					dataLength += 0xFF & dataByte;
@@ -117,7 +120,7 @@ public class Stenagographie implements IStenagographie{
 						lengthOutput = false;
 					}					
 				}
-				else
+				else//Décodage des données
 				{
 					if(k < dataLength)
 					{
