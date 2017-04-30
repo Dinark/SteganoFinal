@@ -1,3 +1,4 @@
+//Classe pour l'interface du Decodage
 package views;
 
 import java.awt.Color;
@@ -23,23 +24,10 @@ public class Decodage extends JPanel {
 	
 	JLabel l=new JLabel();
 	JPanel p=new JPanel();
-	  
-	/*public void paintComponent(Graphics g){
-
-		    try {
-
-		      Image img = ImageIO.read(new File("imageDec.jpg"));
-
-		      g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-
-		    } catch (IOException e) {
-
-		      e.printStackTrace();
-
-		    }                
-
-		  } */
 	
+	/**
+	 * fonction pour lier l'interface dans l'onglet décodage.
+	 */
 	
 	public Decodage(){
 		
@@ -77,7 +65,13 @@ public class Decodage extends JPanel {
 		
 					
 	}
-
+	
+	/**
+	 * Fonction pour chercher le chemin absolu d'une image
+	 * 
+	 * @param Chemin de l'image
+	 * @param nom de l'image
+	 */
 	public void sourceImage(String path,String name){
 		int i,j;
 		j=path.length()-name.length();
