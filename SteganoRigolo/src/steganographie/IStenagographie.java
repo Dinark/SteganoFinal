@@ -3,28 +3,26 @@
 package steganographie;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public interface IStenagographie
 {
 	/**
 	 * Fonction qui cache des bytes dans une image.
-	 * Si l'image est trop petite, sa dimension est doublée pour pouvoir contenir les données.
+	 * Si l'image est trop petite, sa dimension est doublï¿½e pour pouvoir contenir les donnï¿½es.
 	 * 
-	 * @param img 	Image dans laquelle on va cacher des données.
-	 * @param data  Données en bytes à cacher dans l'image.
-	 * @return		Image contenant des donnée cachée.
+	 * @param img 	Image dans laquelle on va cacher des donnï¿½es.
+	 * @param data  Donnï¿½es en bytes ï¿½ cacher dans l'image.
+	 * @return		Image contenant des donnï¿½e cachï¿½e.
 	 */
 	public BufferedImage Steganofer(BufferedImage img, byte[] data);
 
 	/**
-	 * Fonction pour sortir des données (encodé avec Steganofer) d'une Image.
-	 * Si l'image ne contient pas de donnée caché, la sortie est aléatoire.
+	 * Fonction pour sortir des donnï¿½es (encodï¿½ avec Steganofer) d'une Image.
+	 * Si l'image ne contient pas de donnï¿½e cachï¿½, la sortie est alï¿½atoire.
 	 * 
-	 * @param img 	Images contenant des données cachées
-	 * @return		Données en bytes cachées dans l'image
+	 * @param img 	Images contenant des donnï¿½es cachï¿½es
+	 * @return		Donnï¿½es en bytes cachï¿½es dans l'image
 	 */
 	public byte[] DeSteganofer(BufferedImage img);
 

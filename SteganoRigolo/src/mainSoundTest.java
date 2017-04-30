@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import soundCompresion.ISoundSteganographe;
 import soundCompresion.SoundStenagographe;

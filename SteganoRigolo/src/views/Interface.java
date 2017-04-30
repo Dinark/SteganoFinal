@@ -8,19 +8,20 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.nio.file.Files;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import soundCompresion.ISoundSteganographe;
+import org.apache.tika.Tika;
+
 import soundCompresion.SoundStenagographe;
 import steganographie.IStenagographie;
 import steganographie.Stenagographie;
@@ -33,8 +34,6 @@ public class Interface extends JFrame implements ActionListener{
 	JPanel content = new JPanel();				//Contient les Panneaux de codage et decodage
 	String[] listContent = {"Codage","Decodage"}; 
 	JButton b3=new JButton("Commencer");
-	JCheckBox check=new JCheckBox("avec perte"); //check box avec perte ou sans perte
-	Boolean avec_perte;
 	Boolean fermer;
 	/*On crée deux panneaux*/
 	Codage Cod = new Codage();			  //panneau de codage
@@ -71,7 +70,6 @@ public class Interface extends JFrame implements ActionListener{
 				cl.show(content, listContent[0]);
 				b1.setEnabled(false); 
 				b2.setEnabled(true);
-				check.setEnabled(true);
 				we_code=true;}
 
 		});
@@ -84,7 +82,6 @@ public class Interface extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent event){ cl.show(content, listContent[1]);
 			b2.setEnabled(false); 
 			b1.setEnabled(true);
-			check.setEnabled(false);
 			we_code=false;}
 
 		});
@@ -104,22 +101,36 @@ public class Interface extends JFrame implements ActionListener{
 		//Definition de l'action du bouton commencer
 		b3.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
+				
 				if(we_code)
 				{
+					System.out.println("Lancement du Codage");
+
+
 
 					File fileMasque = new File(Cod.code_in_path);
 
 
+					System.out.println("lecture du fichier masque");
+
+					
 					if(fileMasque.exists())
 					{
 
-						String typeMasque = 
-								new MimetypesFileTypeMap().getContentType(fileMasque);
+						
+						//String typeMasque= URLConnection.guessContentTypeFromName(fileMasque.getName());
+						String typeMasque = getFileContentType(fileMasque);
+						
+						System.out.println("Recherche type de "+ fileMasque.getName() +" : " + typeMasque);
 
 						String[] splitString =typeMasque.split("/");
 
+						System.out.println("Recherche type" + typeMasque);
+
 						if(splitString[0].equals("image") )
 						{
+							System.out.println("Lancement codage image");
+
 							codageImage(fileMasque);
 
 						}
@@ -146,6 +157,11 @@ public class Interface extends JFrame implements ActionListener{
 
 							codageSon(fileMasque);
 						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Type de fichier masque inconnu", "Fichier inconnu", JOptionPane.ERROR_MESSAGE); 
+
+						}
 
 					}
 					else
@@ -156,13 +172,16 @@ public class Interface extends JFrame implements ActionListener{
 				}
 				else
 				{
+					System.out.println("Lancement du Decodage");
+
 					File fileAdecoder = new File(Dec.to_decode_path);
 
 					if(fileAdecoder.exists())
 					{
 
 						String typeMasque = 
-								new MimetypesFileTypeMap().getContentType(fileAdecoder);
+								getFileContentType(fileAdecoder);
+;
 
 						String[] splitString =typeMasque.split("/");
 
@@ -272,10 +291,7 @@ public class Interface extends JFrame implements ActionListener{
 		this.add(afficher);
 
 
-		//Definition de l'action du Check box
-		check.addActionListener(new StateListener());
 
-		container.add(check);
 		container.add(b3);
 		this.getContentPane().add(boutonPane, BorderLayout.NORTH);
 		this.getContentPane().add(content, BorderLayout.CENTER);
@@ -289,8 +305,7 @@ public class Interface extends JFrame implements ActionListener{
 	private void code_in_picture(){
 		stegonagraphe = methode.Steganofer(imgSupport, data);
 		afficher =new JLabel(new ImageIcon(stegonagraphe));
-		String extensionn;
-		extensionn=extension(Cod.code_in_name); 
+		//extensionn=extension(Cod.code_in_name); 
 
 		try{
 			System.out.println(Cod.code_in_parent+Cod.code_in_name);
@@ -333,17 +348,25 @@ public class Interface extends JFrame implements ActionListener{
 
 		return res; 
 	}
-
-
-	
-
-
-	class StateListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			avec_perte=((JCheckBox)e.getSource()).isSelected();
-			System.out.println(" - état : " + avec_perte);
+	/**
+	 * permet dobtenir le type d un fichier
+	 * @param fileName le nom du fichier
+	 * @return le type mime
+	 */
+	public String getFileContentType(File file) {
+	    
+		Tika tika = new Tika();
+		String fileType = "unknown/unknown";
+		try {
+			fileType = tika.detect(file);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	    
+	    return fileType;
 	}
+
+
 
 
 

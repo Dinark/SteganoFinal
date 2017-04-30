@@ -13,11 +13,12 @@ public class Stenagographie implements IStenagographie{
 	private static int GBIT = 3;
 	private static int BBIT = 3;
 
-	private static int BITWISEMOVE = 3;
+	//private static int BITWISEMOVE = 3;
 
 	@Override
 	public BufferedImage Steganofer(BufferedImage img, byte[] data)
 	{
+		System.out.println("Stegano Pour Image");
 		int width = img.getWidth();
 		int height = img.getHeight();
 		int mult = 1;
@@ -96,6 +97,8 @@ public class Stenagographie implements IStenagographie{
 	@Override
 	public byte[] DeSteganofer(BufferedImage img)
 	{		
+		System.out.println("DeStegano Pour Image");
+
 		byte[] data = new byte[0];
 		int dataLength = 0;
 		boolean lengthOutput = true;

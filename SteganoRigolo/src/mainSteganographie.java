@@ -1,10 +1,8 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -52,7 +50,7 @@ public class mainSteganographie {
 		JFrame jfmodele = new JFrame("ImageAcacher");
 		JFrame jf2 = new JFrame("ImageAvecSteganographie");
 		
-		JFrame jf3 = new JFrame("ImageApresDeSteganographie");
+		//JFrame jf3 = new JFrame("ImageApresDeSteganographie");
 
 		
 		jf.add(new JLabel(imgIcon));
@@ -85,7 +83,7 @@ public class mainSteganographie {
 		jf2.setVisible(true);
 		
 
-		String pathresult = "ressources/toto";
+		//String pathresult = "ressources/toto";
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream("ressources/toto");
