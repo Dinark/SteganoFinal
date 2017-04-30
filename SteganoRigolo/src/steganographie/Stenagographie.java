@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class Stenagographie implements IStenagographie{
 	
 
-	// On cache dans Chaques couleurs de pixel (rgb) un octet de donnée. (2 + 3 + 3)
+	// On cache dans Chaques couleurs de pixel (rgb) un octet de donnï¿½e. (2 + 3 + 3)
 	private static int RBIT = 2;
 	private static int GBIT = 3;
 	private static int BBIT = 3;
@@ -25,8 +25,8 @@ public class Stenagographie implements IStenagographie{
 			width = mult * img.getWidth();
 			height = mult * img.getHeight();
 			
-			if(width * height > 8192*8192)
-				throw new ExceptionInInitializerError("file too large");
+			//if(width * height > 8192*8192)
+			//	throw new ExceptionInInitializerError("file too large");
 		}
 		BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
